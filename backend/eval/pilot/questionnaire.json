@@ -1,0 +1,131 @@
+{
+  "instrument_id": "nutricoach_pilot_v0.1",
+  "description": "Post-Session-2 questionnaire: System Usability Scale (SUS) plus custom trust and usefulness items for NutriCoachAI pilot study.",
+  "administration": "Paper, Google Form, or local web form immediately after Session 2 tasks (before interview).",
+  "scoring_notes": {
+    "sus": "For items 1,3,5,7,9: score = response - 1. For items 2,4,6,8,10: score = 5 - response. SUS = sum × 2.5 (range 0–100).",
+    "custom": "Likert 1–5; higher = more agreement unless noted."
+  },
+  "sections": [
+    {
+      "section_id": "sus",
+      "title": "System Usability Scale (SUS)",
+      "reference": "Brooke, J. (1996). SUS: A quick and dirty usability scale.",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": {
+          "1": "Strongly disagree",
+          "5": "Strongly agree"
+        }
+      },
+      "items": [
+        {
+          "id": "SUS01",
+          "text": "I think that I would like to use this system frequently.",
+          "sus_positive": true
+        },
+        {
+          "id": "SUS02",
+          "text": "I found the system unnecessarily complex.",
+          "sus_positive": false
+        },
+        {
+          "id": "SUS03",
+          "text": "I thought the system was easy to use.",
+          "sus_positive": true
+        },
+        {
+          "id": "SUS04",
+          "text": "I think that I would need the support of a technical person to be able to use this system.",
+          "sus_positive": false
+        },
+        {
+          "id": "SUS05",
+          "text": "I found the various functions in this system were well integrated.",
+          "sus_positive": true
+        },
+        {
+          "id": "SUS06",
+          "text": "I thought there was too much inconsistency in this system.",
+          "sus_positive": false
+        },
+        {
+          "id": "SUS07",
+          "text": "I would imagine that most people would learn to use this system very quickly.",
+          "sus_positive": true
+        },
+        {
+          "id": "SUS08",
+          "text": "I found the system very cumbersome to use.",
+          "sus_positive": false
+        },
+        {
+          "id": "SUS09",
+          "text": "I felt very confident using the system.",
+          "sus_positive": true
+        },
+        {
+          "id": "SUS10",
+          "text": "I needed to learn a lot of things before I could get going with this system.",
+          "sus_positive": false
+        }
+      ]
+    },
+    {
+      "section_id": "custom_trust_usefulness",
+      "title": "Coaching trust and usefulness",
+      "scale": {
+        "min": 1,
+        "max": 5,
+        "labels": {
+          "1": "Strongly disagree",
+          "5": "Strongly agree"
+        }
+      },
+      "items": [
+        {
+          "id": "C01",
+          "text": "I trusted that the coach remembered what I told it in the previous session.",
+          "theme": "cross_session_memory"
+        },
+        {
+          "id": "C02",
+          "text": "The nutrition advice felt relevant to my personal goal and dietary restrictions.",
+          "theme": "personalisation"
+        },
+        {
+          "id": "C03",
+          "text": "The food comparison (e.g. pizza vs stir-fry) helped me think through a real takeaway decision.",
+          "theme": "food_choice"
+        },
+        {
+          "id": "C04",
+          "text": "I felt comfortable that my health data stayed on this computer rather than being sent to a cloud service.",
+          "theme": "privacy"
+        },
+        {
+          "id": "C05",
+          "text": "I would use a system like this again for everyday nutrition questions (not as a substitute for a doctor or dietitian).",
+          "theme": "reuse_intent"
+        }
+      ]
+    },
+    {
+      "section_id": "open_ended",
+      "title": "Optional short answers",
+      "items": [
+        {
+          "id": "O01",
+          "text": "What was the most helpful part of the coach?",
+          "type": "free_text"
+        },
+        {
+          "id": "O02",
+          "text": "What was confusing or unhelpful?",
+          "type": "free_text"
+        }
+      ]
+    }
+  ]
+}

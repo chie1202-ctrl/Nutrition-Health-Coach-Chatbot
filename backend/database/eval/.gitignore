@@ -1,0 +1,6 @@
+# Eval SQLite artifacts (isolated from production health_coach.db)
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+!README.md

@@ -1,0 +1,98 @@
+{
+  "pilot_version": "0.1",
+  "study_status": "pending_recruitment",
+  "run_metadata": {
+    "run_id": "pilot_YYYYMMDD",
+    "facilitator": "",
+    "production_config": {
+      "ollama_model": "deepseek-r1:8b",
+      "ollama_reasoning": false,
+      "memory_mode": "M2",
+      "rag_enabled": true
+    },
+    "notes": "Copy this template per participant after Session 2. Do not store real names or consent scans in git."
+  },
+  "participants": [
+    {
+      "participant_id": "P01",
+      "demographics": {
+        "age_range": "e.g. 25-34",
+        "health_interest": "e.g. general weight management",
+        "recruitment_source": "e.g. peer"
+      },
+      "consent": {
+        "informed_consent_signed": null,
+        "interview_audio_consent": null,
+        "withdrawn": false
+      },
+      "sessions": {
+        "session_1": {
+          "date": null,
+          "duration_minutes": null,
+          "tasks_completed": ["S1-T1", "S1-T2", "S1-T3", "S1-T4"]
+        },
+        "session_2": {
+          "date": null,
+          "days_after_session_1": null,
+          "duration_minutes": null,
+          "tasks_completed": ["S2-T1", "S2-T2", "S2-T3", "S2-T4", "S2-T5", "S2-T6"]
+        }
+      },
+      "task_scores": {
+        "S2-T1_cross_session_recall": null,
+        "S2-T2_preference_recall": null,
+        "S2-T3_food_choice_comparison": null,
+        "S2-T4_rag_transparency": null,
+        "task_pass_rate": null,
+        "scoring_rubric": "pass | partial | fail | not_attempted"
+      },
+      "questionnaire": {
+        "sus_responses": {
+          "SUS01": null,
+          "SUS02": null,
+          "SUS03": null,
+          "SUS04": null,
+          "SUS05": null,
+          "SUS06": null,
+          "SUS07": null,
+          "SUS08": null,
+          "SUS09": null,
+          "SUS10": null
+        },
+        "sus_score": null,
+        "custom_responses": {
+          "C01": null,
+          "C02": null,
+          "C03": null,
+          "C04": null,
+          "C05": null
+        },
+        "custom_mean": null,
+        "open_ended": {
+          "O01": "",
+          "O02": ""
+        }
+      },
+      "interview": {
+        "duration_minutes": null,
+        "themes": [],
+        "exemplar_quotes": [],
+        "facilitator_notes": ""
+      },
+      "observations": {
+        "memory_viewer_opened": null,
+        "food_choice_card_rendered": null,
+        "rag_chips_seen": null,
+        "notable_issues": []
+      }
+    }
+  ],
+  "aggregate_placeholder": {
+    "n_recruited": 0,
+    "n_completed": 0,
+    "mean_sus": null,
+    "mean_custom_trust": null,
+    "mean_task_pass_rate": null,
+    "status": "Awaiting participant recruitment and Session 1–2 completion."
+  }
+}

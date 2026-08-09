@@ -1,0 +1,71 @@
+[
+  {
+    "script_id": "S04_multi_session_rollup",
+    "description": "Four closed sessions trigger cumulative rollup (threshold 3); session 5 recall tests M2 memory of rolled-up and recent facts",
+    "sessions": [
+      {
+        "session_label": "day1",
+        "turns": [
+          {
+            "role": "user",
+            "content": "I want to lose 5 kg in three months. I cannot eat shellfish."
+          },
+          {
+            "role": "assistant",
+            "content": "We will track your 5 kg goal over three months and keep meals shellfish-free."
+          }
+        ],
+        "expected_key_facts": ["lose 5 kg", "three months", "shellfish"]
+      },
+      {
+        "session_label": "day2",
+        "turns": [
+          {
+            "role": "user",
+            "content": "Milk makes me bloated. I prefer lactose-free or soy milk at breakfast."
+          },
+          {
+            "role": "assistant",
+            "content": "Try lactose-free milk or soy milk and monitor bloating symptoms."
+          }
+        ],
+        "expected_key_facts": ["bloating", "milk", "soy", "lactose"]
+      },
+      {
+        "session_label": "day3",
+        "turns": [
+          {
+            "role": "user",
+            "content": "I walk 30 minutes every evening after dinner."
+          },
+          {
+            "role": "assistant",
+            "content": "Great habit — keep logging your 30-minute evening walks."
+          }
+        ],
+        "expected_key_facts": ["30 minutes", "walk", "evening"]
+      },
+      {
+        "session_label": "day4",
+        "turns": [
+          {
+            "role": "user",
+            "content": "Please avoid red meat in dinner ideas; I prefer chicken or fish."
+          },
+          {
+            "role": "assistant",
+            "content": "I will focus on chicken and fish instead of red meat for dinners."
+          }
+        ],
+        "expected_key_facts": ["red meat", "chicken", "fish"]
+      },
+      {
+        "session_label": "day5_recall",
+        "user_prompt": "Summarize everything you remember about my weight goal, food restrictions, breakfast drink issue, exercise habit, and dinner protein preference.",
+        "expected_keywords": ["5", "kg", "shellfish", "soy", "walk", "chicken"],
+        "cumulative_keywords": ["5", "kg", "shellfish", "soy"],
+        "recent_keywords": ["walk", "chicken"]
+      }
+    ]
+  }
+]

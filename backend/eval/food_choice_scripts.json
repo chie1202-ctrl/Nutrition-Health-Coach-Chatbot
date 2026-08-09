@@ -1,0 +1,175 @@
+[
+  {
+    "case_id": "FC01_pizza_vs_stirfry",
+    "description": "Canonical professor S2-T3 style — pizza vs stir-fry with T2D and shellfish allergy",
+    "user_profile": {
+      "gender": "female",
+      "birth_date": "19620101",
+      "height_cm": 165,
+      "initial_weight_kg": 72,
+      "goal": "lose_weight",
+      "allergies": ["shellfish"],
+      "medical_conditions": ["type 2 diabetes"],
+      "diet_preference": "balanced"
+    },
+    "prompt": "I'm choosing between pizza and Chinese vegetable stir-fry for dinner — which fits my goal better?",
+    "expect_trigger": true,
+    "expect_sources": true,
+    "checks": {
+      "min_dims_filled": 3,
+      "require_allergy_note": true,
+      "require_diabetes_signal": true,
+      "forbidden_in_recommendation": ["shellfish", "shrimp", "prawn"]
+    }
+  },
+  {
+    "case_id": "FC02_burger_vs_sushi",
+    "description": "Allergy trap — burger vs sushi with shellfish allergy",
+    "user_profile": {
+      "gender": "male",
+      "birth_date": "19900101",
+      "height_cm": 178,
+      "initial_weight_kg": 85,
+      "goal": "lose_weight",
+      "allergies": ["shellfish"],
+      "medical_conditions": [],
+      "diet_preference": "balanced"
+    },
+    "prompt": "Takeaway: burger or sushi bowl?",
+    "expect_trigger": true,
+    "expect_sources": true,
+    "checks": {
+      "min_dims_filled": 3,
+      "require_allergy_note": true,
+      "require_diabetes_signal": false,
+      "forbidden_in_recommendation": []
+    }
+  },
+  {
+    "case_id": "FC03_high_protein",
+    "description": "High-protein profile — grilled chicken bowl vs pasta",
+    "user_profile": {
+      "gender": "female",
+      "birth_date": "19880512",
+      "height_cm": 168,
+      "initial_weight_kg": 62,
+      "goal": "maintain_weight",
+      "allergies": [],
+      "medical_conditions": [],
+      "diet_preference": "high_protein"
+    },
+    "prompt": "Eating out: grilled chicken rice bowl or creamy pasta — which is better for me?",
+    "expect_trigger": true,
+    "expect_sources": true,
+    "checks": {
+      "min_dims_filled": 3,
+      "require_allergy_note": false,
+      "require_diabetes_signal": false,
+      "forbidden_in_recommendation": []
+    }
+  },
+  {
+    "case_id": "FC04_natural_wording",
+    "description": "Natural takeaway wording — pad thai vs salad bowl",
+    "user_profile": {
+      "gender": "female",
+      "birth_date": "19950320",
+      "height_cm": 160,
+      "initial_weight_kg": 58,
+      "goal": "lose_weight",
+      "allergies": [],
+      "medical_conditions": [],
+      "diet_preference": "balanced"
+    },
+    "prompt": "takeaway pad thai or salad bowl?",
+    "expect_trigger": true,
+    "expect_sources": true,
+    "checks": {
+      "min_dims_filled": 2,
+      "require_allergy_note": false,
+      "require_diabetes_signal": false,
+      "forbidden_in_recommendation": []
+    }
+  },
+  {
+    "case_id": "FC05_negative_breakfast",
+    "description": "Negative — healthy breakfast should not trigger food-choice pipeline",
+    "user_profile": {
+      "gender": "male",
+      "birth_date": "19800101",
+      "height_cm": 175,
+      "goal": "lose_weight",
+      "allergies": [],
+      "medical_conditions": [],
+      "diet_preference": "balanced"
+    },
+    "prompt": "What is a healthy breakfast?",
+    "expect_trigger": false,
+    "expect_sources": false,
+    "checks": {}
+  },
+  {
+    "case_id": "FC06_negative_goal_recall",
+    "description": "Negative — goal recall should route to normal chat",
+    "user_profile": {
+      "gender": "female",
+      "birth_date": "19920618",
+      "height_cm": 165,
+      "initial_weight_kg": 64,
+      "goal": "lose_weight",
+      "allergies": ["shellfish"],
+      "medical_conditions": [],
+      "diet_preference": "balanced"
+    },
+    "prompt": "What was my weight goal?",
+    "expect_trigger": false,
+    "expect_sources": false,
+    "checks": {}
+  },
+  {
+    "case_id": "FC07_short_comparison",
+    "description": "Short comparison — pizza or burger tonight",
+    "user_profile": {
+      "gender": "male",
+      "birth_date": "19950101",
+      "height_cm": 180,
+      "initial_weight_kg": 90,
+      "goal": "lose_weight",
+      "allergies": [],
+      "medical_conditions": [],
+      "diet_preference": "balanced"
+    },
+    "prompt": "pizza or burger tonight",
+    "expect_trigger": true,
+    "expect_sources": true,
+    "checks": {
+      "min_dims_filled": 2,
+      "require_allergy_note": false,
+      "require_diabetes_signal": false,
+      "forbidden_in_recommendation": []
+    }
+  },
+  {
+    "case_id": "FC08_dining_shellfish",
+    "description": "Dining out sushi vs poke with shellfish allergy",
+    "user_profile": {
+      "gender": "female",
+      "birth_date": "19780101",
+      "height_cm": 162,
+      "initial_weight_kg": 70,
+      "goal": "lose_weight",
+      "allergies": ["shellfish"],
+      "medical_conditions": [],
+      "diet_preference": "balanced"
+    },
+    "prompt": "eating out — sushi or poke bowl?",
+    "expect_trigger": true,
+    "expect_sources": true,
+    "checks": {
+      "min_dims_filled": 3,
+      "require_allergy_note": true,
+      "require_diabetes_signal": false,
+      "forbidden_in_recommendation": []
+    }
+  }
+]

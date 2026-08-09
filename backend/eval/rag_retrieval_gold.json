@@ -1,0 +1,146 @@
+[
+  {
+    "id": "R01_who_sodium",
+    "query_type": "chat",
+    "message": "How much salt should adults limit per day for a healthy diet?",
+    "expected_sources": ["WHO_Healthy_Diet_Fact_Sheet_394.pdf", "CDC_Sodium_and_Dietary_Guidelines.pdf"]
+  },
+  {
+    "id": "R02_who_fruit_veg",
+    "query_type": "chat",
+    "message": "What does WHO recommend about eating fruits and vegetables?",
+    "expected_sources": ["WHO_Healthy_Diet_Fact_Sheet_394.pdf"]
+  },
+  {
+    "id": "R03_cdc_sodium_limit",
+    "query_type": "chat",
+    "message": "What is the daily sodium limit in the Dietary Guidelines?",
+    "expected_sources": ["CDC_Sodium_and_Dietary_Guidelines.pdf"]
+  },
+  {
+    "id": "R04_cdc_restaurant",
+    "query_type": "chat",
+    "message": "Tips for reducing sodium when eating at restaurants",
+    "expected_sources": ["CDC_Sodium_and_Dietary_Guidelines.pdf", "CDC_Eat_Well_Away_from_Home.pdf"]
+  },
+  {
+    "id": "R05_cdc_away_home",
+    "query_type": "chat",
+    "message": "How can I eat well away from home when dining out?",
+    "expected_sources": ["CDC_Eat_Well_Away_from_Home.pdf"]
+  },
+  {
+    "id": "R06_nhs_eatwell",
+    "query_type": "chat",
+    "message": "What food groups should make up a healthy balanced diet according to the Eatwell Guide?",
+    "expected_sources": ["NHS_Eatwell_Guide_Booklet_2018.pdf"]
+  },
+  {
+    "id": "R07_nhs_portions",
+    "query_type": "chat",
+    "message": "Eatwell Guide fruit vegetables starchy carbohydrates protein dairy",
+    "expected_sources": ["NHS_Eatwell_Guide_Booklet_2018.pdf"]
+  },
+  {
+    "id": "R08_dga_vegetables",
+    "query_type": "chat",
+    "message": "What vegetables do dietary guidelines recommend eating more of?",
+    "expected_sources": ["Dietary Guidelines for Americans, 2020–2025.pdf", "2025-2030美國膳食指南.pdf"]
+  },
+  {
+    "id": "R09_usda_nutrients",
+    "query_type": "chat",
+    "message": "nutritive value protein carbohydrates in common foods",
+    "expected_sources": ["Nutritive Value of Foods.pdf"]
+  },
+  {
+    "id": "R10_activity",
+    "query_type": "chat",
+    "message": "How much moderate physical activity should adults get per week?",
+    "expected_sources": ["physical activity and sedentary behaviour.pdf"]
+  },
+  {
+    "id": "R11_mi_coaching",
+    "query_type": "chat",
+    "message": "motivational interviewing open questions change talk",
+    "expected_sources": ["motivational-interviewing-guide.pdf"]
+  },
+  {
+    "id": "R12_t2dm_breakfast",
+    "query_type": "chat",
+    "message": "Type 2 diabetes breakfast blood sugar stable fiber protein",
+    "expected_sources": ["WHO_Healthy_Diet_Fact_Sheet_394.pdf", "Dietary Guidelines for Americans, 2020–2025.pdf", "NHS_Eatwell_Guide_Booklet_2018.pdf"]
+  },
+  {
+    "id": "R13_takeaway_sodium",
+    "query_type": "chat",
+    "message": "takeaway pizza burger sodium hidden salt restaurant",
+    "expected_sources": ["CDC_Sodium_and_Dietary_Guidelines.pdf", "CDC_Eat_Well_Away_from_Home.pdf"]
+  },
+  {
+    "id": "R14_fc_pizza_stirfry",
+    "query_type": "food_choice",
+    "message": "I'm choosing between pizza and Chinese vegetable stir-fry for dinner — which fits my goal better?",
+    "expected_sources": ["CDC_Eat_Well_Away_from_Home.pdf", "CDC_Sodium_and_Dietary_Guidelines.pdf", "WHO_Healthy_Diet_Fact_Sheet_394.pdf", "NHS_Eatwell_Guide_Booklet_2018.pdf"]
+  },
+  {
+    "id": "R15_fc_burger_sushi",
+    "query_type": "food_choice",
+    "message": "Takeaway: burger or sushi bowl?",
+    "expected_sources": ["CDC_Eat_Well_Away_from_Home.pdf", "CDC_Sodium_and_Dietary_Guidelines.pdf"]
+  },
+  {
+    "id": "R16_fc_plain_names",
+    "query_type": "food_choice",
+    "message": "滷肉飯 vs 雞胸便當",
+    "expected_sources": ["Nutritive Value of Foods.pdf", "CDC_Eat_Well_Away_from_Home.pdf"]
+  },
+  {
+    "id": "R17_mp_lose_weight",
+    "query_type": "meal_plan",
+    "message": "nutrition meal planning for lose_weight",
+    "expected_sources": ["Dietary Guidelines for Americans, 2020–2025.pdf", "NHS_Eatwell_Guide_Booklet_2018.pdf", "WHO_Healthy_Diet_Fact_Sheet_394.pdf"]
+  },
+  {
+    "id": "R18_mp_diabetes",
+    "query_type": "meal_plan",
+    "message": "nutrition meal planning for lose_weight type 2 diabetes",
+    "expected_sources": ["Dietary Guidelines for Americans, 2020–2025.pdf", "WHO_Healthy_Diet_Fact_Sheet_394.pdf"]
+  },
+  {
+    "id": "R19_mp_maintain",
+    "query_type": "meal_plan",
+    "message": "nutrition meal planning for maintain_weight",
+    "expected_sources": ["Dietary Guidelines for Americans, 2020–2025.pdf", "NHS_Eatwell_Guide_Booklet_2018.pdf"]
+  },
+  {
+    "id": "R20_sugar_limits",
+    "query_type": "chat",
+    "message": "WHO free sugars intake limit percent of total energy",
+    "expected_sources": ["WHO_Healthy_Diet_Fact_Sheet_394.pdf"]
+  },
+  {
+    "id": "R21_processed_food",
+    "query_type": "chat",
+    "message": "processed foods salt sugar unhealthy diet patterns",
+    "expected_sources": ["WHO_Healthy_Diet_Fact_Sheet_394.pdf", "CDC_Sodium_and_Dietary_Guidelines.pdf"]
+  },
+  {
+    "id": "R22_chinese_dga",
+    "query_type": "chat",
+    "message": "膳食指南 蔬菜 全穀 蛋白質 均衡飲食",
+    "expected_sources": ["2025-2030美國膳食指南.pdf", "Dietary Guidelines for Americans, 2020–2025.pdf"]
+  },
+  {
+    "id": "R23_fast_food",
+    "query_type": "chat",
+    "message": "fast food takeaway portion size split meal healthier choices",
+    "expected_sources": ["CDC_Eat_Well_Away_from_Home.pdf", "CDC_Sodium_and_Dietary_Guidelines.pdf"]
+  },
+  {
+    "id": "R24_glycemic",
+    "query_type": "chat",
+    "message": "glycemic impact refined carbohydrates diabetes meal choice",
+    "expected_sources": ["WHO_Healthy_Diet_Fact_Sheet_394.pdf", "Dietary Guidelines for Americans, 2020–2025.pdf", "NHS_Eatwell_Guide_Booklet_2018.pdf"]
+  }
+]

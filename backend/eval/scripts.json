@@ -1,0 +1,77 @@
+[
+  {
+    "script_id": "S01_goal_tracking",
+    "description": "User states a weight-loss goal in session 1 and asks for follow-up in session 2",
+    "sessions": [
+      {
+        "session_label": "day1",
+        "turns": [
+          {
+            "role": "user",
+            "content": "I want to lose 5 kg in three months. I prefer high-protein lunches and I cannot eat shellfish."
+          },
+          {
+            "role": "assistant",
+            "content": "Great goal. We can focus on steady calorie deficit, protein-rich lunches, and shellfish-free meals."
+          }
+        ],
+        "expected_key_facts": ["lose 5 kg", "three months", "high-protein", "shellfish"]
+      },
+      {
+        "session_label": "day2",
+        "user_prompt": "What was my goal again, and what food should I avoid?",
+        "expected_keywords": ["5", "kg", "shellfish"]
+      }
+    ]
+  },
+  {
+    "script_id": "S02_preference_update",
+    "description": "User updates dairy preference across sessions",
+    "sessions": [
+      {
+        "session_label": "day1",
+        "turns": [
+          {
+            "role": "user",
+            "content": "I usually drink milk at breakfast but I feel bloated afterwards."
+          },
+          {
+            "role": "assistant",
+            "content": "You may want to try lactose-free milk or soy milk and monitor symptoms."
+          }
+        ],
+        "expected_key_facts": ["bloated", "milk", "soy"]
+      },
+      {
+        "session_label": "day2",
+        "user_prompt": "Last time we discussed my breakfast drink problem. What should I try now?",
+        "expected_keywords": ["milk", "soy", "lactose"]
+      }
+    ]
+  },
+  {
+    "script_id": "S03_advice_reuse",
+    "description": "Coach should avoid repeating identical meal advice",
+    "sessions": [
+      {
+        "session_label": "day1",
+        "turns": [
+          {
+            "role": "user",
+            "content": "Please suggest one dinner idea for weight management."
+          },
+          {
+            "role": "assistant",
+            "content": "Try grilled salmon, quinoa, and steamed broccoli for a balanced dinner."
+          }
+        ],
+        "expected_key_facts": ["grilled salmon", "quinoa", "broccoli"]
+      },
+      {
+        "session_label": "day2",
+        "user_prompt": "Give me a different dinner idea than before, but still good for weight management.",
+        "expected_keywords": ["dinner"]
+      }
+    ]
+  }
+]
