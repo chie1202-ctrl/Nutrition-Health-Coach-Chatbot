@@ -6,7 +6,7 @@ NutriCoachAI is a **local-first** health coaching application: user profiles, ch
 
 > **Scope:** General wellness coaching only — not medical advice, diagnosis, or treatment. This is a research and demonstration system, not a clinical product.
 
-**Development status (Entry 028 + final regression audit):** Application code is **frozen** and **demo-ready** for MSc submission. Entry 026 delivered UI freeze polish; Entry 027 added a targeted backend fix for live meal-plan LLM reliability; Entry 028 migrated the visual layer to Vitality Logic (Stitch). **Final post-freeze regression audit** (2026-06-24, [`FINAL_REGRESSION_AUDIT.md`](FINAL_REGRESSION_AUDIT.md)): no blockers. Desktop demo validation: **Entry 021 B1 — 14/14 PASS** (2026-06-24). Meal-plan reliability probe: **~4/5 live success** — template fallback is a **known limitation**, not a crash.
+**Development status:** Application code is frozen and demo-ready for MSc submission. This public repository contains the source code, setup files, evaluation scripts, and technical documentation needed to reproduce the prototype locally. Local research notes, dissertation drafts, generated evaluation outputs, databases, vector indexes, dependency folders, and source PDFs are intentionally excluded from version control.
 
 ---
 
@@ -18,7 +18,7 @@ NutriCoachAI is a **local-first** health coaching application: user profiles, ch
 | Backend | FastAPI + Uvicorn |
 | Database | SQLite (`backend/database/health_coach.db`) |
 | LLM | Ollama — default `deepseek-r1:8b` via `langchain-ollama` |
-| RAG | Chroma + HuggingFace embeddings over PDFs in `my_knowledge/` |
+| RAG | Chroma + HuggingFace embeddings over local PDFs in `my_knowledge/` |
 | Memory | Cross-session summaries (production default **M2**) |
 
 **Key capabilities:**
@@ -41,6 +41,7 @@ When Ollama is not running, chat send and meal-plan generation are **disabled** 
 - **[Ollama](https://ollama.com)** installed and on your `PATH`
 - **~6 GB** disk space for `deepseek-r1:8b`
 - **Network on first run** — HuggingFace may download the embedding model (`sentence-transformers/all-MiniLM-L6-v2`) when RAG initializes
+- **RAG source PDFs** — place the documents listed in `my_knowledge/SOURCES.md` into `my_knowledge/` if you want full RAG functionality
 - **macOS / Linux** (or WSL) recommended; paths below use bash
 
 ---
@@ -132,13 +133,14 @@ Coach_ChatBot/
 ├── backend/
 │   ├── main.py              # FastAPI routes (REST + SSE)
 │   ├── logic.py             # Domain logic, RAG, memory, meal plans
-│   ├── database/            # SQLite + Chroma vector store
+│   ├── database/            # Database schema/helper code; local DB files are generated
 │   ├── tests/               # pytest suite
-│   └── eval/results/        # Validation JSON + Playwright screenshots
-├── my_knowledge/            # RAG source PDFs (five guideline documents)
-├── scripts/                 # Playwright validation harnesses
-└── thesis/                  # Dissertation draft + figure manifest
+│   └── eval/                # Evaluation runners, protocols, and rubrics
+├── my_knowledge/            # RAG source catalogue; PDFs are local-only
+└── scripts/                 # Playwright validation and utility harnesses
 ```
+
+The following runtime or research artifacts are intentionally not committed: `.venv/`, `frontend/node_modules/`, `frontend/dist/`, SQLite databases, Chroma vector indexes, `backend/eval/results/`, `backend/eval/locomo/data/`, local RAG PDFs, meeting notes, dissertation drafts, and experiment logs.
 
 ---
 
@@ -233,7 +235,7 @@ Suitable for supervisor review or defense rehearsal. Requires `./start.sh` with 
 | 9 | Send an unsafe prompt (e.g. starvation for fast weight loss) | **Safety notice** in chat |
 | 10 | Optional: open **View Memory**, **Goal Progress**, or resize to mobile width | Level 2 polish features |
 
-This path aligns with `scripts/entry_021_b1_desktop_validation.mjs` (14/14 PASS, 2026-06-24). See [`FINAL_REGRESSION_AUDIT.md`](FINAL_REGRESSION_AUDIT.md) for the full post-Entry 028 regression audit.
+This path aligns with `scripts/entry_021_b1_desktop_validation.mjs`. Generated validation outputs are local artifacts and are not included in the public repository.
 
 ---
 
@@ -259,8 +261,7 @@ Requires Ollama, `deepseek-r1:8b`, and Playwright (via `frontend/node_modules`):
 | `node scripts/entry_023_onboarding_validation.mjs` | 023 | Onboarding wizard |
 | `node scripts/entry_024_goal_progress_validation.mjs` | 024 | Goal Progress card |
 
-**Latest B1 artifact:** `backend/eval/results/entry_021_b1_desktop_validation.json`  
-**Screenshots:** `backend/eval/results/entry_021_b1_desktop/` (and sibling entry folders)
+Generated validation JSON, logs, and screenshots are written under `backend/eval/results/` during local runs. That directory is ignored by Git because it contains generated artifacts rather than source code.
 
 **Meal-plan reliability probe** (backend only, no browser):
 
@@ -285,29 +286,30 @@ Typical result after Entry 027 hardening: **4/5 live success (~80%)**. One attem
 | `rag_ready: false` on `/health` | RAG not initialized | Ensure `my_knowledge/` contains PDFs; wait for first-time embedding download; check backend log |
 | UI looks outdated after `git pull` | Stale Vite dev server | Stop all `npm run dev` processes; restart `./start.sh`; hard refresh (`Cmd+Shift+R` / `Ctrl+Shift+R`) |
 | App on port **5174** instead of 5173 | Port 5173 already in use | Stop the other dev server or use the URL printed by Vite; avoid running two frontends |
-| Meal plan shows **Template Fallback** | LLM returned invalid JSON after retries | Check Ollama load; see `backend/eval/results/meal_plan_raw_failures/` for captured outputs |
+| Meal plan shows **Template Fallback** | LLM returned invalid JSON after retries | Check Ollama load; generated failure captures, when present, are stored locally under `backend/eval/results/` |
 | Summarization banner after New Conversation | Normal — session summary in progress | Wait ~10–30s; chat remains enabled (Entry 026) |
 | Long first startup | Model pull or embedding download | Allow several minutes on first `./start.sh` |
 
 ---
 
-## Research documentation
+## Repository contents
 
-| Document | Purpose |
-|----------|---------|
-| `PROJECT_MEMORY.md` | Target vision vs current implementation |
-| `EXPERIMENT_LOG.md` | Validation entries (016–029) |
-| `FINAL_REGRESSION_AUDIT.md` | Post-Entry 028 full regression audit (2026-06-24) |
-| `PROJECT_BACKLOG.md` | Remaining thesis and demo tasks |
-| `RESEARCH_NOTES.md` | Design decisions and evaluation notes |
-| `thesis/THESIS_DRAFT.md` | Dissertation draft (A1–A6) |
-| `thesis/FIGURE_MANIFEST.md` | Thesis figure inventory (A7) |
+| Path | Purpose |
+|------|---------|
+| `backend/` | FastAPI API, local database logic, RAG, memory, meal planning, and tests |
+| `frontend/` | React + Vite web interface |
+| `scripts/` | Local launch, validation, and evaluation utilities |
+| `backend/eval/` | Evaluation runners, rubrics, protocols, and scripted scenarios |
+| `my_knowledge/SOURCES.md` | Catalogue of external PDF sources used for the local RAG corpus |
+| `start.sh` | One-command local launcher |
+
+Private/local working material such as meeting notes, dissertation drafts, experiment logs, generated screenshots, local databases, vector indexes, and virtual environments is kept outside the public GitHub repository.
 
 ---
 
 ## Privacy note
 
-NutriCoachAI is designed for **local execution**: profiles, chat history, meal plans, and metrics stay in on-device SQLite. Inference uses local Ollama. RAG embeddings may require a one-time download from HuggingFace Hub. There is no account system, HTTPS deployment, or cloud sync in this prototype — see thesis limitations and Future Work for production gaps.
+NutriCoachAI is designed for **local execution**: profiles, chat history, meal plans, and metrics stay in on-device SQLite. Inference uses local Ollama. RAG embeddings may require a one-time download from HuggingFace Hub. There is no account system, HTTPS deployment, or cloud sync in this prototype.
 
 ---
 
