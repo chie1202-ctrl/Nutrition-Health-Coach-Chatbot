@@ -122,6 +122,11 @@ Defaults live in `backend/.env.example`. Copy to `backend/.env` only if you need
 | `MEAL_PLAN_TEMPERATURE` | `0.1` | Lower variance for structured meal-plan JSON |
 | `MEMORY_MODE` | `M2` | Cross-session memory injection mode |
 
+Optional semantic-memory judge settings are also available for evaluation runs:
+`OPENAI_API_KEY`, `OPENAI_JUDGE_MODEL`, `OPENAI_JUDGE_MAX_OUTPUT_TOKENS`, and
+`OPENAI_JUDGE_TIMEOUT`. These are only needed for the OpenAI API judge path; the
+copy-paste ChatGPT judging workflow can be used without an API key.
+
 ---
 
 ## Project structure
@@ -262,6 +267,29 @@ Requires Ollama, `deepseek-r1:8b`, and Playwright (via `frontend/node_modules`):
 | `node scripts/entry_024_goal_progress_validation.mjs` | 024 | Goal Progress card |
 
 Generated validation JSON, logs, and screenshots are written under `backend/eval/results/` during local runs. That directory is ignored by Git because it contains generated artifacts rather than source code.
+
+### Semantic memory evaluation
+
+The expanded semantic memory evaluation used for the dissertation is implemented under `backend/eval/`:
+
+| File | Purpose |
+|------|---------|
+| `memory_semantic_scripts.json` | Eight scripted cross-session memory scenarios |
+| `run_memory_semantic_eval.py` | Runs M0/M1/M2/M3 memory conditions with repeated runs |
+| `make_memory_semantic_judge_pack.py` | Creates copy-paste ChatGPT judging packs |
+| `merge_memory_semantic_judgements.py` | Merges ChatGPT judgements into summary CSV/JSON files |
+
+To run the response-generation stage without API-based judging:
+
+```bash
+source .venv/bin/activate
+OLLAMA_REASONING=false OLLAMA_TEMPERATURE=0 SUMMARY_TEMPERATURE=0 \
+python backend/eval/run_memory_semantic_eval.py --fresh-eval-db --repeats 3 --skip-ai-grading
+```
+
+Generated outputs are written to `backend/eval/results/`, which is intentionally ignored by Git.
+For non-API judging, run `make_memory_semantic_judge_pack.py` on the generated JSON, paste the
+chunks into ChatGPT, then merge the returned judgements with `merge_memory_semantic_judgements.py`.
 
 **Meal-plan reliability probe** (backend only, no browser):
 
