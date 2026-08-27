@@ -1,0 +1,391 @@
+[
+  {
+    "script_id": "S01_goal_recall",
+    "description": "Recall a user's weight-management goal and timeline across sessions.",
+    "sessions": [
+      {
+        "session_label": "day1",
+        "turns": [
+          {
+            "role": "user",
+            "content": "I want to lose 5 kg in three months. I prefer steady changes rather than strict dieting."
+          },
+          {
+            "role": "assistant",
+            "content": "We can focus on gradual habits that support losing 5 kg over three months."
+          }
+        ],
+        "expected_key_facts": ["lose 5 kg", "three months", "steady changes"]
+      },
+      {
+        "session_label": "day2_eval",
+        "user_prompt": "Remind me what goal we are working on and suggest one small next step.",
+        "expected_keywords": ["5", "kg", "three months"]
+      }
+    ],
+    "ground_truth": {
+      "required_facts": [
+        "The user wants to lose 5 kg.",
+        "The user wants to do this over three months.",
+        "The user prefers steady changes rather than strict dieting."
+      ],
+      "expected_behaviour": "Recall the 5 kg in three months goal and suggest a small, gradual next step.",
+      "forbidden_claims": [
+        "The user wants rapid weight loss.",
+        "The user wants a strict diet."
+      ],
+      "scenario_specific_check": "goal_and_timeline_recalled"
+    }
+  },
+  {
+    "script_id": "S02_restriction_recall",
+    "description": "Recall a conversation-only shellfish restriction that is not stored in the structured profile.",
+    "sessions": [
+      {
+        "session_label": "day1",
+        "turns": [
+          {
+            "role": "user",
+            "content": "Please remember that I cannot eat shellfish. Shrimp, crab, and lobster are not safe for me."
+          },
+          {
+            "role": "assistant",
+            "content": "I will avoid shellfish such as shrimp, crab, and lobster in future meal ideas."
+          }
+        ],
+        "expected_key_facts": ["cannot eat shellfish", "shrimp", "crab", "lobster"]
+      },
+      {
+        "session_label": "day2_eval",
+        "user_prompt": "Can you suggest a protein for dinner tonight based on what you remember?",
+        "expected_keywords": ["shellfish", "avoid"]
+      }
+    ],
+    "ground_truth": {
+      "required_facts": [
+        "The user cannot eat shellfish.",
+        "Shrimp, crab, and lobster are unsafe for the user."
+      ],
+      "expected_behaviour": "Recommend a non-shellfish protein and explicitly avoid shellfish.",
+      "forbidden_claims": [
+        "The user can eat shrimp.",
+        "The user should try crab or lobster.",
+        "The user is vegetarian."
+      ],
+      "scenario_specific_check": "restriction_respected"
+    }
+  },
+  {
+    "script_id": "S03_preference_recall",
+    "description": "Recall stable lunch preferences for future coaching.",
+    "sessions": [
+      {
+        "session_label": "day1",
+        "turns": [
+          {
+            "role": "user",
+            "content": "For lunch, I like high-protein meals that are quick to prepare. Chicken wraps and tofu bowls are easy for me."
+          },
+          {
+            "role": "assistant",
+            "content": "Quick high-protein lunches like chicken wraps or tofu bowls sound practical for you."
+          }
+        ],
+        "expected_key_facts": ["high-protein", "quick", "chicken wraps", "tofu bowls"]
+      },
+      {
+        "session_label": "day2_eval",
+        "user_prompt": "Give me a lunch idea that fits my usual preferences.",
+        "expected_keywords": ["protein", "quick"]
+      }
+    ],
+    "ground_truth": {
+      "required_facts": [
+        "The user likes high-protein lunches.",
+        "The user prefers lunches that are quick to prepare.",
+        "Chicken wraps and tofu bowls are easy for the user."
+      ],
+      "expected_behaviour": "Suggest a quick high-protein lunch consistent with chicken wraps, tofu bowls, or a similar practical option.",
+      "forbidden_claims": [
+        "The user dislikes tofu.",
+        "The user wants slow batch-cooking lunches only."
+      ],
+      "scenario_specific_check": "preference_used"
+    }
+  },
+  {
+    "script_id": "S04_preference_update",
+    "description": "Use the latest breakfast drink preference instead of an older preference.",
+    "sessions": [
+      {
+        "session_label": "day1",
+        "turns": [
+          {
+            "role": "user",
+            "content": "I usually drink regular milk with breakfast."
+          },
+          {
+            "role": "assistant",
+            "content": "Regular milk can be part of breakfast if it suits you."
+          }
+        ],
+        "expected_key_facts": ["regular milk", "breakfast"]
+      },
+      {
+        "session_label": "day2",
+        "turns": [
+          {
+            "role": "user",
+            "content": "Actually, regular milk makes me bloated. I want to avoid it and try soy milk instead."
+          },
+          {
+            "role": "assistant",
+            "content": "Soy milk or lactose-free milk would be better options to try if regular milk causes bloating."
+          }
+        ],
+        "expected_key_facts": ["regular milk makes me bloated", "avoid", "soy milk"]
+      },
+      {
+        "session_label": "day3_eval",
+        "user_prompt": "What should I drink with breakfast tomorrow?",
+        "expected_keywords": ["soy", "milk"]
+      }
+    ],
+    "ground_truth": {
+      "required_facts": [
+        "The user used to drink regular milk with breakfast.",
+        "Regular milk makes the user bloated.",
+        "The user wants to avoid regular milk and try soy milk instead."
+      ],
+      "expected_behaviour": "Prioritise the updated information by suggesting soy milk or lactose-free alternatives and avoiding regular milk.",
+      "forbidden_claims": [
+        "The user should drink regular milk.",
+        "The user is allergic to milk."
+      ],
+      "scenario_specific_check": "latest_information_prioritised"
+    }
+  },
+  {
+    "script_id": "S05_conflict_handling",
+    "description": "Handle a conflict between an older preference and a newer restriction.",
+    "sessions": [
+      {
+        "session_label": "day1",
+        "turns": [
+          {
+            "role": "user",
+            "content": "I enjoy peanut butter on toast as a quick snack."
+          },
+          {
+            "role": "assistant",
+            "content": "Peanut butter toast can be a convenient snack when it fits your needs."
+          }
+        ],
+        "expected_key_facts": ["peanut butter", "toast", "quick snack"]
+      },
+      {
+        "session_label": "day2",
+        "turns": [
+          {
+            "role": "user",
+            "content": "My doctor asked me to avoid peanuts for now while we investigate a possible allergy."
+          },
+          {
+            "role": "assistant",
+            "content": "Avoid peanuts for now and choose alternatives until your doctor clarifies the allergy risk."
+          }
+        ],
+        "expected_key_facts": ["avoid peanuts", "doctor", "possible allergy"]
+      },
+      {
+        "session_label": "day3_eval",
+        "user_prompt": "I need a quick snack. What would you suggest based on what you remember?",
+        "expected_keywords": ["avoid", "peanut"]
+      }
+    ],
+    "ground_truth": {
+      "required_facts": [
+        "The user previously enjoyed peanut butter toast.",
+        "The user's doctor asked them to avoid peanuts for now.",
+        "The peanut restriction is newer and should override the older snack preference."
+      ],
+      "expected_behaviour": "Do not recommend peanut butter; suggest a peanut-free snack and mention the newer peanut restriction.",
+      "forbidden_claims": [
+        "The user should have peanut butter toast.",
+        "The user definitely has a confirmed peanut allergy."
+      ],
+      "scenario_specific_check": "conflict_handled_correctly"
+    }
+  },
+  {
+    "script_id": "S06_advice_non_repetition",
+    "description": "Avoid repeating a dinner idea already given in a previous session.",
+    "sessions": [
+      {
+        "session_label": "day1",
+        "turns": [
+          {
+            "role": "user",
+            "content": "Please suggest one simple dinner idea for weight management."
+          },
+          {
+            "role": "assistant",
+            "content": "Try grilled salmon with quinoa and steamed broccoli for a balanced dinner."
+          }
+        ],
+        "expected_key_facts": ["grilled salmon", "quinoa", "broccoli"]
+      },
+      {
+        "session_label": "day2_eval",
+        "user_prompt": "Give me a different dinner idea than last time, still suitable for weight management.",
+        "expected_keywords": ["different", "dinner"]
+      }
+    ],
+    "ground_truth": {
+      "required_facts": [
+        "The previous dinner idea was grilled salmon with quinoa and steamed broccoli."
+      ],
+      "expected_behaviour": "Recognise the previous dinner idea and provide a different weight-management dinner.",
+      "forbidden_claims": [
+        "The user has not received a dinner idea before.",
+        "The same grilled salmon, quinoa, and broccoli dinner is a different idea."
+      ],
+      "scenario_specific_check": "previous_advice_recognised"
+    }
+  },
+  {
+    "script_id": "S07_multi_session_rollup",
+    "description": "Retain early and later facts after multiple closed sessions trigger cumulative rollup.",
+    "sessions": [
+      {
+        "session_label": "day1",
+        "turns": [
+          {
+            "role": "user",
+            "content": "My target is to lose 5 kg in three months."
+          },
+          {
+            "role": "assistant",
+            "content": "We will keep the 5 kg in three months target in mind."
+          }
+        ],
+        "expected_key_facts": ["lose 5 kg", "three months"]
+      },
+      {
+        "session_label": "day2",
+        "turns": [
+          {
+            "role": "user",
+            "content": "I cannot eat shellfish, especially shrimp."
+          },
+          {
+            "role": "assistant",
+            "content": "I will avoid shellfish and shrimp in meal suggestions."
+          }
+        ],
+        "expected_key_facts": ["cannot eat shellfish", "shrimp"]
+      },
+      {
+        "session_label": "day3",
+        "turns": [
+          {
+            "role": "user",
+            "content": "I walk for 30 minutes after dinner most evenings."
+          },
+          {
+            "role": "assistant",
+            "content": "Your 30-minute evening walks are a useful routine to continue."
+          }
+        ],
+        "expected_key_facts": ["30 minutes", "walk", "after dinner"]
+      },
+      {
+        "session_label": "day4",
+        "turns": [
+          {
+            "role": "user",
+            "content": "For dinners, I prefer chicken or fish and want to avoid red meat."
+          },
+          {
+            "role": "assistant",
+            "content": "I will suggest chicken or fish dinners and avoid red meat."
+          }
+        ],
+        "expected_key_facts": ["chicken", "fish", "avoid red meat"]
+      },
+      {
+        "session_label": "day5_eval",
+        "user_prompt": "Summarise what you remember about my goal, food restrictions, exercise habit, and dinner protein preference.",
+        "expected_keywords": ["5", "kg", "shellfish", "walk", "chicken"]
+      }
+    ],
+    "ground_truth": {
+      "required_facts": [
+        "The user wants to lose 5 kg in three months.",
+        "The user cannot eat shellfish, especially shrimp.",
+        "The user walks for 30 minutes after dinner most evenings.",
+        "The user prefers chicken or fish for dinners and wants to avoid red meat."
+      ],
+      "expected_behaviour": "Recall both early and later facts across several sessions.",
+      "forbidden_claims": [
+        "The user prefers red meat.",
+        "The user can eat shellfish.",
+        "The user does no evening walking."
+      ],
+      "scenario_specific_check": "early_and_late_facts_retained"
+    }
+  },
+  {
+    "script_id": "S08_recent_session_priority",
+    "description": "Prioritise the most recent coaching constraint over older general advice.",
+    "sessions": [
+      {
+        "session_label": "day1",
+        "turns": [
+          {
+            "role": "user",
+            "content": "I normally like spicy food and often add chilli sauce to meals."
+          },
+          {
+            "role": "assistant",
+            "content": "Spicy flavours can make meals enjoyable if they suit your digestion."
+          }
+        ],
+        "expected_key_facts": ["spicy food", "chilli sauce"]
+      },
+      {
+        "session_label": "day2",
+        "turns": [
+          {
+            "role": "user",
+            "content": "This week I have acid reflux, so I need gentle, non-spicy meals."
+          },
+          {
+            "role": "assistant",
+            "content": "For this week, choose gentle, non-spicy meals while your reflux is active."
+          }
+        ],
+        "expected_key_facts": ["acid reflux", "gentle", "non-spicy"]
+      },
+      {
+        "session_label": "day3_eval",
+        "user_prompt": "What kind of dinner should I choose tonight?",
+        "expected_keywords": ["non-spicy", "gentle"]
+      }
+    ],
+    "ground_truth": {
+      "required_facts": [
+        "The user normally likes spicy food and chilli sauce.",
+        "This week the user has acid reflux.",
+        "The user currently needs gentle, non-spicy meals."
+      ],
+      "expected_behaviour": "Prioritise the recent reflux constraint and recommend a gentle, non-spicy dinner.",
+      "forbidden_claims": [
+        "The user should add chilli sauce tonight.",
+        "The user dislikes spicy food permanently.",
+        "The user has a diagnosed chronic gastrointestinal disease."
+      ],
+      "scenario_specific_check": "recent_constraint_prioritised"
+    }
+  }
+]
