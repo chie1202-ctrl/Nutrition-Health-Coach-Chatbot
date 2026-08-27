@@ -118,7 +118,7 @@ Defaults live in `backend/.env.example`. Copy to `backend/.env` only if you need
 | `OLLAMA_MODEL` | `deepseek-r1:8b` | Chat and meal-plan model |
 | `OLLAMA_REASONING` | `false` | Disable reasoning traces in production |
 | `OLLAMA_NUM_PREDICT` | `768` | Chat token budget |
-| `MEAL_PLAN_NUM_PREDICT` | `2048` | Meal-plan JSON token budget |
+| `MEAL_PLAN_NUM_PREDICT` | `3072` | Meal-plan JSON token budget |
 | `MEAL_PLAN_TEMPERATURE` | `0.1` | Lower variance for structured meal-plan JSON |
 | `MEMORY_MODE` | `M2` | Cross-session memory injection mode |
 
