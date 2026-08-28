@@ -2,11 +2,11 @@
 
 **Privacy-Preserving Health Coach Chatbot** — MSc dissertation research prototype.
 
-NutriCoachAI is a **local-first** health coaching application: user profiles, chat, cross-session memory, RAG-grounded answers, 7-day meal plans, and weight tracking run on your machine. Health data is stored in local SQLite; the language model runs through **Ollama** on `localhost` — not a cloud coaching API.
+NutriCoachAI is a **local-first** AI nutrition coaching prototype: user profiles, chat history, meal plans, weight records, and cross-session memory are stored on the local computer by default. The main language-model workflow runs through **Ollama** on `localhost`, rather than a cloud-based coaching API. SQLite is used as the local storage tool, but the main design point is local computer persistence rather than the database technology itself.
 
 > **Scope:** General wellness coaching only — not medical advice, diagnosis, or treatment. This is a research and demonstration system, not a clinical product.
 
-**Development status:** Application code is frozen and demo-ready for MSc submission. This public repository contains the source code, setup files, evaluation scripts, and technical documentation needed to reproduce the prototype locally. Local research notes, dissertation drafts, generated evaluation outputs, databases, vector indexes, dependency folders, and source PDFs are intentionally excluded from version control.
+**Development status:** Application code is frozen and demo-ready for MSc submission. This public repository contains the source code, setup files, evaluation scripts, and technical documentation intended to support local reproduction of the prototype. Local research notes, dissertation drafts, generated evaluation outputs, databases, vector indexes, dependency folders, and source PDFs are intentionally excluded from version control.
 
 ---
 
@@ -16,16 +16,16 @@ NutriCoachAI is a **local-first** health coaching application: user profiles, ch
 |-------|------------|
 | Frontend | React 18 + Vite 5 |
 | Backend | FastAPI + Uvicorn |
-| Database | SQLite (`backend/database/health_coach.db`) |
+| Local persistence | User data stored on the local computer using SQLite (`backend/database/health_coach.db`) |
 | LLM | Ollama — default `deepseek-r1:8b` via `langchain-ollama` |
 | RAG | Chroma + HuggingFace embeddings over local PDFs in `my_knowledge/` |
-| Memory | Compact Hybrid Summary Memory (production default **M2**) |
+| Memory | Compact Hybrid Summary Memory for cross-session continuity (production default: **M2**) |
 
 **Key capabilities:**
 
 - **SSE chat streaming** — incremental assistant replies (`POST /users/{id}/chat/stream`)
 - **RAG citations** — source filename chips under assistant messages when `rag_ready: true`
-- **Cross-session memory** — “New Conversation” closes a session, summarizes it, and injects compact memory into later prompts
+- **Cross-session memory** — “New Conversation” closes a session, creates a summary, and later injects compact memory together with structured user context
 - **Memory Viewer** — read profile context, session summaries, and session history; regenerate eligible summaries
 - **Goal Progress** — dashboard card for current / target / remaining weight and trend
 - **7-day meal plan** — live LLM JSON generation with validation and template fallback when the model fails
@@ -270,7 +270,7 @@ Generated validation JSON, logs, and screenshots are written under `backend/eval
 
 ### Semantic memory evaluation
 
-The expanded semantic memory evaluation used for the dissertation is implemented under `backend/eval/`:
+The expanded semantic memory evaluation used for the dissertation is implemented under `backend/eval/`. ChatGPT can be used as a rubric-based LLM evaluator for this evaluation, but the resulting judgements are not expert, dietetic, clinical, or real-user assessment:
 
 | File | Purpose |
 |------|---------|
@@ -299,7 +299,7 @@ set -a && source backend/.env.example && set +a
 python3 scripts/meal_plan_reliability_probe.py 5
 ```
 
-Typical result after Entry 027 hardening: **4/5 live success (~80%)**. One attempt may return **Template Fallback** — the UI still shows 7 days and does not crash. Re-run **Generate 7-Day Plan** if the badge shows Template Fallback during a demo.
+This probe is a local development check rather than a dissertation-level experiment. In recent local runs, most attempts returned a live generated plan, while failed structured outputs fell back to the template path so the UI still displayed a complete 7-day plan.
 
 ---
 
@@ -337,7 +337,7 @@ Private/local working material such as meeting notes, dissertation drafts, exper
 
 ## Privacy note
 
-NutriCoachAI is designed for **local execution**: profiles, chat history, meal plans, and metrics stay in on-device SQLite. Inference uses local Ollama. RAG embeddings may require a one-time download from HuggingFace Hub. There is no account system, HTTPS deployment, or cloud sync in this prototype.
+NutriCoachAI is designed for **local execution**: profiles, chat history, meal plans, and metrics stay on the local computer by default, with SQLite used as the local storage mechanism. Inference uses local Ollama. RAG embeddings may require a one-time download from HuggingFace Hub. There is no account system, HTTPS deployment, multi-device synchronisation, or cloud sync in this prototype.
 
 ---
 
