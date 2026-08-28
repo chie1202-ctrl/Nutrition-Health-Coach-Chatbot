@@ -1,6 +1,6 @@
 import json
 import os
-from typing import Any, List, Optional
+from typing import Any, List, Literal, Optional
 
 from dotenv import load_dotenv
 
@@ -31,7 +31,7 @@ app.add_middleware(
 
 class UserPayload(BaseModel):
     name: str = Field(..., min_length=1)
-    gender: str = Field(..., min_length=1)
+    gender: Literal["male", "female"]
     birth_date: str = Field(..., min_length=8)
     height_cm: float = Field(..., gt=0)
     weight_kg: Optional[float] = None

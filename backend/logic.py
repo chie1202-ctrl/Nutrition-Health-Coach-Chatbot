@@ -552,7 +552,7 @@ def init_db() -> None:
         CREATE TABLE IF NOT EXISTS User_Profiles (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            gender TEXT NOT NULL CHECK (gender IN ('male', 'female', 'other')),
+            gender TEXT NOT NULL CHECK (gender IN ('male', 'female')),
             birth_date TEXT NOT NULL,
             height_cm REAL NOT NULL CHECK (height_cm > 0 AND height_cm < 300),
             created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),
@@ -742,13 +742,18 @@ def calculate_bmi(weight_kg: float, height_cm: float) -> float:
     return round(weight_kg / ((height_cm / 100) ** 2), 2)
 
 
+def validate_ree_gender_basis(gender: str) -> str:
+    gender_basis = str(gender or "").strip().lower()
+    if gender_basis not in {"male", "female"}:
+        raise ValueError("REE requires male/female formula basis")
+    return gender_basis
+
+
 def calculate_ree(weight_kg: float, height_cm: float, age: int, gender: str) -> float:
-    gender = gender.lower()
+    gender = validate_ree_gender_basis(gender)
     if gender == "male":
         return round((10 * weight_kg) + (6.25 * height_cm) - (5 * age) + 5, 2)
-    if gender == "female":
-        return round((10 * weight_kg) + (6.25 * height_cm) - (5 * age) - 161, 2)
-    return round((10 * weight_kg) + (6.25 * height_cm) - (5 * age) - 78, 2)
+    return round((10 * weight_kg) + (6.25 * height_cm) - (5 * age) - 161, 2)
 
 
 def bmi_label(bmi: float) -> str:
@@ -762,6 +767,7 @@ def bmi_label(bmi: float) -> str:
 
 
 def create_user_profile(name: str, gender: str, birth_date: str, height_cm: float, initial_weight_kg: Optional[float] = None, **profile_fields: Any) -> int:
+    gender_basis = validate_ree_gender_basis(gender)
     conn = get_conn()
     cur = conn.cursor()
     cur.execute(
@@ -775,7 +781,7 @@ def create_user_profile(name: str, gender: str, birth_date: str, height_cm: floa
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         (
-            name.strip(), gender.lower(), birth_date.strip(), float(height_cm),
+            name.strip(), gender_basis, birth_date.strip(), float(height_cm),
             str(profile_fields.get("goal", "") or "").strip(),
             str(profile_fields.get("activity_level", "") or "").strip(),
             str(profile_fields.get("diet_preference", "") or "").strip(),
@@ -798,6 +804,7 @@ def create_user_profile(name: str, gender: str, birth_date: str, height_cm: floa
 
 
 def update_user_profile(user_id: int, name: str, gender: str, birth_date: str, height_cm: float, **profile_fields: Any) -> None:
+    gender_basis = validate_ree_gender_basis(gender)
     conn = get_conn()
     cur = conn.cursor()
     cur.execute(
@@ -811,7 +818,7 @@ def update_user_profile(user_id: int, name: str, gender: str, birth_date: str, h
         WHERE user_id = ?
         """,
         (
-            name.strip(), gender.lower(), birth_date.strip(), float(height_cm),
+            name.strip(), gender_basis, birth_date.strip(), float(height_cm),
             str(profile_fields.get("goal", "") or "").strip(),
             str(profile_fields.get("activity_level", "") or "").strip(),
             str(profile_fields.get("diet_preference", "") or "").strip(),
@@ -1883,7 +1890,7 @@ def build_coach_prompt(
         trend_block = build_weight_trend_block(user, weight_history)
         trend_section = f"\n\n[Weight Trend]\n{trend_block}"
     return (
-        "You are a professional, supportive, and safety-aware AI nutrition coach. "
+        "You are a supportive, safety-aware AI nutrition coach. "
         "Use the user profile, metrics, coaching memory, and knowledge context below. "
         "Memory summaries may be incomplete; allergies, medical conditions, and diet restrictions in the User Profile are authoritative. "
         "Structured weight history in [Weight Trend] is authoritative for progress questions. "
@@ -2109,7 +2116,7 @@ def build_food_choice_prompt(
     requirements = build_food_choice_requirement_lines(user)
     dimensions = ", ".join(FOOD_CHOICE_COMPARISON_DIMENSIONS)
     return (
-        "You are a professional, supportive AI nutrition coach helping someone choose between two dining-out or takeaway meal options.\n"
+        "You are a supportive, safety-aware AI nutrition coach helping someone choose between two dining-out or takeaway meal options.\n"
         "Use the user profile, metrics, coaching memory, and knowledge context below.\n"
         "Memory summaries may be incomplete; allergies, medical conditions, and diet restrictions in the User Profile are authoritative.\n"
         "Respond with ONLY valid JSON (no markdown fences, no commentary) using this schema:\n"

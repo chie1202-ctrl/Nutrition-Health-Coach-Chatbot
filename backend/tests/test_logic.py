@@ -42,6 +42,11 @@ def test_strip_think_tags_think_only_becomes_empty():
     assert logic.strip_think_tags(f"{open_tag}only reasoning{close_tag}") == ""
 
 
+def test_calculate_ree_rejects_unvalidated_gender_basis():
+    with pytest.raises(ValueError, match="male/female"):
+        logic.calculate_ree(70, 175, 30, "other")
+
+
 def test_invoke_llm_visible_reply_retries_then_succeeds(monkeypatch):
     class FakeLLM:
         def __init__(self):

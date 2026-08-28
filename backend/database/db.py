@@ -28,7 +28,7 @@ def init_db(db_path: str = DB_PATH) -> None:
         CREATE TABLE IF NOT EXISTS User_Profiles (
             user_id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
-            gender TEXT NOT NULL CHECK (gender IN ('male', 'female', 'other')),
+            gender TEXT NOT NULL CHECK (gender IN ('male', 'female')),
             birth_date TEXT NOT NULL,
             height_cm REAL NOT NULL CHECK (height_cm > 0 AND height_cm < 300),
             created_at TEXT NOT NULL DEFAULT (datetime('now', 'localtime')),

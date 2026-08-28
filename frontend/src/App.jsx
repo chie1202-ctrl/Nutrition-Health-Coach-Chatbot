@@ -1640,7 +1640,7 @@ function UserProfileFields({ value, onChange, includeWeight = false }) {
   const update = (field, next) => onChange({ ...value, [field]: next })
   return <>
     <input className="input" placeholder="Name" value={value.name} onChange={(e) => update('name', e.target.value)} />
-    <select className="input" value={value.gender} onChange={(e) => update('gender', e.target.value)}><option value="male">Male</option><option value="female">Female</option><option value="other">Other</option></select>
+    <select className="input" value={value.gender} onChange={(e) => update('gender', e.target.value)}><option value="male">Male</option><option value="female">Female</option></select>
     <input className="input" placeholder="Birth date (YYYYMMDD)" value={value.birth_date} onChange={(e) => update('birth_date', e.target.value)} />
     <input className="input" placeholder="Height (cm)" type="number" value={value.height_cm} onChange={(e) => update('height_cm', e.target.value)} />
     {includeWeight ? <input className="input" placeholder="Latest / initial weight (kg)" type="number" value={value.weight_kg} onChange={(e) => update('weight_kg', e.target.value)} /> : null}
@@ -1968,7 +1968,6 @@ function OnboardingFlow({ preview, aiReady, error, onError, onComplete }) {
                 <select className="input" value={form.gender} onChange={(e) => updateField('gender', e.target.value)}>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
-                  <option value="other">Other</option>
                 </select>
                 <input className="input" placeholder="Birth date (YYYYMMDD)" value={form.birth_date} onChange={(e) => updateField('birth_date', e.target.value)} />
                 <input className="input" type="number" placeholder="Height (cm)" value={form.height_cm} onChange={(e) => updateField('height_cm', e.target.value)} />
