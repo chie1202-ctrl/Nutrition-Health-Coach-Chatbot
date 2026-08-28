@@ -19,7 +19,7 @@ NutriCoachAI is a **local-first** health coaching application: user profiles, ch
 | Database | SQLite (`backend/database/health_coach.db`) |
 | LLM | Ollama — default `deepseek-r1:8b` via `langchain-ollama` |
 | RAG | Chroma + HuggingFace embeddings over local PDFs in `my_knowledge/` |
-| Memory | Cross-session summaries (production default **M2**) |
+| Memory | Compact Hybrid Summary Memory (production default **M2**) |
 
 **Key capabilities:**
 
